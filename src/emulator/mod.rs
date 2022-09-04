@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct Chip8 {
     opcode: u16,
     memory: Vec<u16>,
@@ -5,21 +6,19 @@ pub struct Chip8 {
     pc: u16,
     stack: Vec<u16>,
     sp: u8,
+    screen: Vec<u16>
 }
 
 impl Chip8 {
     pub fn new() -> Chip8 {
         Chip8 {
             opcode: 0,
-            memory: vec![0, 4096],
+            memory: vec![0; 4096],
             i: 0,
             pc: 0,
-            stack: vec![0, 16],
+            stack: vec![0; 16],
             sp: 0,
+            screen: vec![0; 2048],
         }
-    }
-
-    pub fn test(&self) {
-        println!("Flex")
     }
 }

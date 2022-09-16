@@ -1,4 +1,5 @@
-use std::fs;
+use std::fs::File;
+use std::io::Read;
 
 const START_ADDRESS: i32 = 0x200;
 
@@ -28,7 +29,11 @@ impl Chip8 {
         }
     }
 
-    pub fn load_rom(&self, path: String) {
-        let content = fs::read_to_string(path).expect("Should have been able to read the file");
+    pub fn load_rom(&self, filename: String) {
+        let mut f = File::open(&filename).expect("Can't open rom");
+        let mut buf = vec![0, f.metadata().expect("Can't read metadata").len() as u8];
+
+        f.read_to_end(&mut buf).expect("Can't read rom");
+        println!("{:?}", buf)
     }
 }

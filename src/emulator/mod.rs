@@ -1,7 +1,11 @@
 use std::fs::File;
 use std::io::Read;
+pub mod graphics;
+extern crate sdl2;
 
 const START_ADDRESS: i32 = 0x200;
+const WIDTH: usize = 64;
+const HEIGHT: usize = 32;
 
 #[derive(Debug)]
 pub struct Chip8 {
@@ -25,7 +29,7 @@ impl Chip8 {
             pc: 0,
             stack: vec![0; 16],
             sp: 0,
-            screen: vec![0; 2048],
+            screen: vec![0; WIDTH*HEIGHT],
         }
     }
 
@@ -34,6 +38,9 @@ impl Chip8 {
         let mut buf = vec![0, f.metadata().expect("Can't read metadata").len() as u8];
 
         f.read_to_end(&mut buf).expect("Can't read rom");
-        println!("{:?}", buf)
+    }
+
+    pub fn run(&self) {
+        graphics::setup(WIDTH as u32, HEIGHT as u32);
     }
 }

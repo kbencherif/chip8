@@ -15,5 +15,6 @@ fn main() {
     let chip8 = emulator::Chip8::new();
 
     println!("{}", args.len());
-    chip8.load_rom(args[1].clone())
+    chip8.load_rom(args[1].clone());
+    chip8.run();
 }

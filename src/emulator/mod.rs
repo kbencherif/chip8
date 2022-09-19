@@ -41,7 +41,11 @@ impl Chip8 {
         f.read_to_end(&mut buf).expect("Can't read rom");
     }
 
-    pub fn load_font(&self) {}
+    pub fn load_font(&mut self) {
+        for i in 0..font::FONTSET_SIZE {
+            self.memory[font::FONTSET_START_ADDRESS as usize + i] = font::FONT[i]
+        }
+    }
 
     pub fn run(&self) {
         let mut screen = graphics::Screen::new(WIDTH as u32, HEIGHT as u32);
@@ -54,5 +58,9 @@ impl Chip8 {
                 break;
             }
         }
+    }
+
+    pub fn _debug(&self) {
+        println!("{:?}", self)
     }
 }

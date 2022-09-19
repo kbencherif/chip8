@@ -1,7 +1,7 @@
-const FONTSET_SIZE: usize = 80;
-const FONTSET_START_ADDRESS: i32 = 0x200;
+pub const FONTSET_SIZE: usize = 80;
+pub const FONTSET_START_ADDRESS: u16 = 0x200;
 
-const FONT: [u8; FONTSET_SIZE] = [
+pub const FONT: [u16; FONTSET_SIZE] = [
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
     0x20, 0x60, 0x20, 0x20, 0x70, // 1
     0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2

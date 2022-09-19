@@ -33,12 +33,19 @@ impl Screen {
             Ok(it) => it,
             Err(e) => panic!("Window error {}", e),
         };
+
         let canvas_result = window.into_canvas().build();
         let canvas = match canvas_result {
             Ok(it) => it,
             Err(e) => panic!("Canvas error {}", e),
         };
-        let e = sdl_context.event_pump().unwrap();
+
+        let event_pump_result = sdl_context.event_pump();
+        let e = match event_pump_result {
+            Ok(it) => it,
+            Err(e) => panic!("Event_pump error {}", e),
+        };
+
         Screen { canvas, e }
     }
 
@@ -52,7 +59,7 @@ impl Screen {
         ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 60));
     }
 
-    pub fn is_stop(&mut self) -> bool {
+    pub fn poll_event(&mut self) -> bool {
         for event in self.e.poll_iter() {
             match event {
                 Event::Quit { .. }

@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::Read;
 pub mod graphics;
 extern crate sdl2;
+pub mod font;
 
 const START_ADDRESS: i32 = 0x200;
 const WIDTH: usize = 64;
@@ -33,12 +34,14 @@ impl Chip8 {
         }
     }
 
-    pub fn load_rom(&self, filename: String) {
+    pub fn load_rom(&mut self, filename: String) {
         let mut f = File::open(&filename).expect("Can't open rom");
         let mut buf = vec![0, f.metadata().expect("Can't read metadata").len() as u8];
 
         f.read_to_end(&mut buf).expect("Can't read rom");
     }
+
+    pub fn load_font(&mut self) {}
 
     pub fn run(&self) {
         let mut screen = graphics::Screen::new(WIDTH as u32, HEIGHT as u32);
@@ -47,7 +50,7 @@ impl Chip8 {
             screen.clear(i);
             i = (i + 1) % 255;
             screen.draw();
-            if screen.is_stop() {
+            if screen.poll_event() {
                 break;
             }
         }

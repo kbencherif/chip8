@@ -29,7 +29,7 @@ impl Chip8 {
             pc: 0,
             stack: vec![0; 16],
             sp: 0,
-            screen: vec![0; WIDTH*HEIGHT],
+            screen: vec![0; WIDTH * HEIGHT],
         }
     }
 
@@ -41,6 +41,15 @@ impl Chip8 {
     }
 
     pub fn run(&self) {
-        graphics::setup(WIDTH as u32, HEIGHT as u32);
+        let mut screen = graphics::Screen::new(WIDTH as u32, HEIGHT as u32);
+        let mut i = 0;
+        loop {
+            screen.clear(i);
+            i = (i + 1) % 255;
+            screen.draw();
+            if screen.is_stop() {
+                break;
+            }
+        }
     }
 }

@@ -34,14 +34,14 @@ impl Chip8 {
         }
     }
 
-    pub fn load_rom(&mut self, filename: String) {
+    pub fn load_rom(&self, filename: String) {
         let mut f = File::open(&filename).expect("Can't open rom");
         let mut buf = vec![0, f.metadata().expect("Can't read metadata").len() as u8];
 
         f.read_to_end(&mut buf).expect("Can't read rom");
     }
 
-    pub fn load_font(&mut self) {}
+    pub fn load_font(&self) {}
 
     pub fn run(&self) {
         let mut screen = graphics::Screen::new(WIDTH as u32, HEIGHT as u32);
